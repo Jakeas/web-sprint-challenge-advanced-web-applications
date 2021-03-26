@@ -38,7 +38,7 @@ const ColorList = ({ colors, updateColors }) => {
       .delete(`/api/colors/${id}`)
       .then(res => {
         console.log('delete res', res)
-        props.deleteMovie(id)
+        deleteColor(id)
       })
       .catch(err => {
         console.log("delete err", err)
