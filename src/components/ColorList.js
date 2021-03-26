@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import EditMenu from './EditMenu'
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
+import { useParams } from "react-router";
 
 const initialColor = {
   color: "",
   code: { hex: "" }
 };
+
+const { id } = useParams
 
 const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
@@ -18,10 +22,27 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-
+    axiosWithAuth()
+    .put(`api/colors/${id}`, colorToEdit)
+    .then(res => {
+      console.log({res})
+      setColorToEdit(res.data)
+    })
+    .catch(err => {
+      console.log({err})
+    })
   };
 
   const deleteColor = color => {
+      axiosWithAuth()
+      .delete(`/api/colors/${id}`)
+      .then(res => {
+        console.log('delete res', res)
+        props.deleteMovie(id)
+      })
+      .catch(err => {
+        console.log("delete err", err)
+      })
   };
 
   return (

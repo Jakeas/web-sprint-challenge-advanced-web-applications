@@ -6,37 +6,38 @@ import { useHistory } from "react-router";
 const initialValues = {
   username: "",
   password: "",
-}
+};
 
 const Login = () => {
+  const { push } = useHistory();
 
-  const { push } = useHistory()
-
-  const [ formValues, setFormValues ] = useState(initialValues)
+  const [formValues, setFormValues] = useState(initialValues);
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-   
-  useEffect(()=>{
+  // useEffect(() => {
+    // }, []);
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
     axiosWithAuth()
-      .post('/api/login', {username: 'Lambda School', password: 'i<3Lambd4'})
-      .then(res => {
-        console.log({res})
-        window.localStorage.setItem('token', res.data.payload)
-        push('/bubble-page') 
+      .post("/api/login", { username: "Lambda School", password: "i<3Lambd4" })
+      .then((res) => {
+        window.localStorage.setItem("token", res.data.payload);
+        push("/bubble-page");
       })
-      .catch(err => {
-        console.log({err})
-      }) 
-  }, []);
+      .catch((err) => {
+      });
+    };
+  
 
-    const handleSubmit = e => {
-       e.preventDefault()
-  }  
+  
+  
 
-    const handleChange = e => {
-      setFormValues({...formValues, [e.target.name]: e.target.value })
-    }
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
@@ -44,14 +45,14 @@ const Login = () => {
       <div>
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
-          <input 
+          <input
             type="text"
             name="username"
             value={formValues.username}
             onChange={handleChange}
           />
           <label htmlFor="password">Password</label>
-          <input 
+          <input
             type="text"
             name="password"
             value={formValues.password}
