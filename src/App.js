@@ -5,13 +5,16 @@ import PrivateRoute from './components/BubblePage'
 import Login from "./components/Login";
 import "./styles.scss";
 
+
+
 function App() {
+
   return (
     <Router>
       <div className="App">
         <Switch>
 
-        <PrivateRoute path="/bubble-page" component={PrivateRoute}  />
+        <PrivateRoute path="/bubble-page" component={PrivateRoute} />
 
         <Route exact path="/" component={Login} />
 
