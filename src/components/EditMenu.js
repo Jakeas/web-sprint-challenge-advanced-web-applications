@@ -28,7 +28,7 @@ const EditMenu = ({colorToEdit, saveEdit, setColorToEdit, setEditing}) => {
       
         <div className="button-row">
           <button type="submit">save</button>
-          <button onClick={(e) => setEditing(false) (e, colorToEdit)}>cancel</button>
+          <button onClick={(e) => setEditing(false)}>cancel</button>
         </div>
     </form>);
 }

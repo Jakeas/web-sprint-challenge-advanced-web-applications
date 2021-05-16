@@ -10,6 +10,7 @@ const initialColor = {
 const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  
 
   const editColor = color => {
     setEditing(true);
@@ -18,40 +19,24 @@ const ColorList = ({ colors, updateColors }) => {
 
   
   
-  const saveEdit = (e, id) => {
+  const saveEdit = (e) => {
     e.preventDefault();
-    if (colorToEdit){
+    const id = colorToEdit.id
     axiosWithAuth()
       .put(`/api/colors/${id}`, colorToEdit)
       .then(res =>{
-        const newColors =
-          colors.map((color) => {
-            if (color.id === id){
-              return res.data
-            } else{
-              return color
-            }
-          })
-
-          newColors.push(colorToEdit)
-
-          updateColors(newColors)
-        console.log("put RES ", res.data)
+        console.log("Color put RES", res)
+        const newColors = colors.filter((color) => color.id !== id )
+        newColors.push(colorToEdit)
+        updateColors(newColors)
       })
       .catch(err => {
         console.log("put ERR",err)
       })
-    } else {
-      axiosWithAuth()
-        .post('/api/colors', colorToEdit)
-        .then(res => {
-          setColorToEdit(res.data)
-          setEditing(false)
-        })
-    }  
-  };
+  }
 
-  
+  /* We map over the data set, looking for the color we are wanting to edit based of the id, if the id of the color we're on is correct, we overwrite that color with the new edits, otherwise, we just return the color as it is.
+  and extra hint would be that directly correlates to how you set your filtering process up */
   
   const deleteColor = color => {
     axiosWithAuth()
