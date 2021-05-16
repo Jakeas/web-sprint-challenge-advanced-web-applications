@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import BubblePage, { BubblePage as mockBubbles }from "./BubblePage";
+import BubblePage, { BubblePage as mockBubbles } from "./BubblePage";
 
 jest.mock('./BubblePage')
 
 
-const bubbleData = [
+const data = [
   {
     color: "aliceblue", 
     id: 1,
@@ -31,7 +31,7 @@ const bubbleData = [
 
 
 test("Renders BubblePage without errors", async () => {
-  mockBubbles.mockResolvedValueOnce(bubbleData)
+  mockBubbles.mockResolvedValueOnce(data)
   render(<BubblePage />)
   await waitFor(()=> {
     const withoutErrors = screen.getByText(/aliceblue/i)
