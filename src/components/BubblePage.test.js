@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import BubblePage, { BubblePage as mockBubbles } from "./BubblePage";
+import BubblePage from "./BubblePage";
+import {fetchBubbles as mockFetchBubbles} from './fetchBubbles'
 
-jest.mock('./BubblePage')
-
+jest.mock('./fetchBubbles')
 
 const data = [
   {
@@ -30,20 +30,17 @@ const data = [
 ]
 
 
-test("Renders BubblePage without errors", async () => {
-  mockBubbles.mockResolvedValueOnce(data)
-  render(<BubblePage />)
-  await waitFor(()=> {
-    const withoutErrors = screen.getByText(/aliceblue/i)
-    expect(withoutErrors).not.toBeInTheDocument()
-  })
-
+test("Renders Bubble without errors", async () => {
+    mockFetchBubbles.mockResolvedValueOnce({data: []})
+    render(<BubblePage/>)
 });
 
-test("Fetches data and renders the bubbles on mounting", () => {
-  // Finish this test
+test("Fetches data and renders the bubbles on mounting", async () => {
+    mockFetchBubbles.mockResolvedValueOnce({data})
+    render(<BubblePage/>)
+     await waitFor(()=> {
+        const withoutErrors = screen.getByText(/aliceblue/i)
+        expect(withoutErrors).toBeInTheDocument()
+    })
 });
 
-//Task List
-//1. Setup test for basic rendering of component
-//2. Setup test for initial rendering of bubbles on loading
